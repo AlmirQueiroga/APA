@@ -1,0 +1,1 @@
+gcc insertionsort.c -o main
