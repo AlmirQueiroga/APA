@@ -3,14 +3,13 @@
 int TamanhoEx = NULL; 
 
 void HeapSort(int array[],int tamanho){
-    BuildMaxHeap(array, tamanho);
+    BuildMaxHeap(array, tamanho); //Constroi heap
 
     for(int i = tamanho - 1; i > 0; i--){
-        //std::swap(array[0], array[i]);
         int aux = array[0];
-        array[0] = array[i];
+        array[0] = array[i]; //trocar a raiz com a folha
         array[i] = aux;
-        TamanhoEx--;
+        TamanhoEx--; // remover o nó 
         MaxHeapify(array, 0);
     }
 }
@@ -26,24 +25,28 @@ void MaxHeapify(int array[], int i){
     int E = FilhoEsquerdo(i);
     int D = FilhoDireito(i);
 
-    int maior = i;
+    int maior = i; //raiz atual
 
-    if(E < TamanhoEx && array[E] > array[maior])
+    //ultimo ramo maior que a raiz? 
+    if(E < TamanhoEx && array[E] > array[maior]){
         maior = E;
+    }
     
-    if(D < TamanhoEx && array[D] > array[maior])
+    if(D < TamanhoEx && array[D] > array[maior]){
         maior = D;
-
+    }
+    
+    //filhos maiores que o pai
+    //trocar numero maior nos filhos pelo pai
     if(maior != i){
-        //std::swap(array[i], array[maior]);
         int aux = array[i];
         array[i] = array[maior];
         array[maior] = aux;
-        MaxHeapify(array, maior);
+        MaxHeapify(array, maior); 
     }
 }
 
-int Pai(int i){
+int Pai(int i){ //?????
     if(i = 0)
         return 0;
 
@@ -60,7 +63,7 @@ int FilhoDireito(int i){
 
 int main(int argc, char const *argv[])
 {
-    int array[] ={1, 16, 5, 30, 27, 17, 20, 2, 57, 3, 90};
+    int array[] ={8, 23, 12, 2, 8, 41, 13, 2, 3, 2, 31};
 
    	int tamanho = sizeof(array)/sizeof(int);
 
