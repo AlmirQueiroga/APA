@@ -1,0 +1,7 @@
+CC = gcc
+
+all:
+	$(CC) Heapsort.c -o main
+
+clean:
+rm Heapsort
