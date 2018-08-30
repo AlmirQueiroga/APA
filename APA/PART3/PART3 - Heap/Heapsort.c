@@ -14,9 +14,10 @@ void HeapSort(int array[],int tamanho){
     }
 }
 
-void BuildMaxHeap(int array[],int tamanho){
+void BuildMaxHeap(int array[],int tamanho){ // fazer as propriedades do MaxHeap
     TamanhoEx = tamanho;
-    for(int i = Pai(tamanho); i >= 0; i--){
+	int p = Pai(tamanho);
+    for(int i = p; i >= 0; i--){
         MaxHeapify(array, i);
     }
 }
@@ -25,7 +26,7 @@ void MaxHeapify(int array[], int i){
     int E = FilhoEsquerdo(i);
     int D = FilhoDireito(i);
 
-    int maior = i; //raiz atual
+    int maior = i; //raiz atual - Pai
 
     //ultimo ramo maior que a raiz? 
     if(E < TamanhoEx && array[E] > array[maior]){
@@ -47,9 +48,9 @@ void MaxHeapify(int array[], int i){
     }
 }
 
-int Pai(int i){ //?????
-    if(i = 0)
-        return 0;
+int Pai(int i){ 
+    //if(i = 0)
+      //  return 0;
 
     return (i - 1)/2;
 }
