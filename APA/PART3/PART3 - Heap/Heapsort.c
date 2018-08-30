@@ -16,7 +16,7 @@ void HeapSort(int array[],int tamanho){
 
 void BuildMaxHeap(int array[],int tamanho){
     TamanhoEx = tamanho;
-    for(int i = (tamanho - 1)/2; i >= 0; i--){
+    for(int i = Pai(tamanho); i >= 0; i--){
         MaxHeapify(array, i);
     }
 }
