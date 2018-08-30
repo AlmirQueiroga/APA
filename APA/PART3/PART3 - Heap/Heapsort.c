@@ -2,20 +2,24 @@
 
 int TamanhoEx = NULL; 
 
+void HeapSort(int array[],int tamanho){
+    BuildMaxHeap(array, tamanho);
 
-int Pai(int i){
-    if(i = 0)
-        return 0;
-
-    return (i - 1)/2;
+    for(int i = tamanho - 1; i > 0; i--){
+        //std::swap(array[0], array[i]);
+        int aux = array[0];
+        array[0] = array[i];
+        array[i] = aux;
+        TamanhoEx--;
+        MaxHeapify(array, 0);
+    }
 }
 
-int FilhoEsquerdo(int i){
-    return 2*i + 1;
-}
-
-int FilhoDireito(int i){
-    return 2*i + 2;
+void BuildMaxHeap(int array[],int tamanho){
+    TamanhoEx = tamanho;
+    for(int i = (tamanho - 1)/2; i >= 0; i--){
+        MaxHeapify(array, i);
+    }
 }
 
 void MaxHeapify(int array[], int i){
@@ -39,26 +43,20 @@ void MaxHeapify(int array[], int i){
     }
 }
 
-void BuildMaxHeap(int array[],int tamanho){
-    TamanhoEx = tamanho;
-    for(int i = (tamanho - 1)/2; i >= 0; i--){
-        MaxHeapify(array, i);
-    }
+int Pai(int i){
+    if(i = 0)
+        return 0;
+
+    return (i - 1)/2;
 }
 
-void HeapSort(int array[],int tamanho){
-    BuildMaxHeap(array, tamanho);
-
-    for(int i = tamanho - 1; i > 0; i--){
-        //std::swap(array[0], array[i]);
-        int aux = array[0];
-        array[0] = array[i];
-        array[i] = aux;
-        TamanhoEx--;
-        MaxHeapify(array, 0);
-    }
+int FilhoEsquerdo(int i){
+    return 2*i + 1;
 }
 
+int FilhoDireito(int i){
+    return 2*i + 2;
+}
 
 int main(int argc, char const *argv[])
 {
