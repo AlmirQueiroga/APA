@@ -1,0 +1,7 @@
+CC = gcc
+
+all:
+	$(CC) countingsort.c -o main
+
+clean:
+rm countingsort
