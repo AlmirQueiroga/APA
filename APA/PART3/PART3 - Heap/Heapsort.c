@@ -38,6 +38,7 @@ void MaxHeapify(int array[], int i){
     
     //filhos maiores que o pai
     //trocar numero maior nos filhos pelo pai
+    //até filho for menor e vai para o for do heapsort
     if(maior != i){
         int aux = array[i];
         array[i] = array[maior];
