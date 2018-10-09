@@ -122,6 +122,10 @@ int main(){
     FILE *fp;
     fp = fopen("instancias/dij10.txt", "r");
 
+    if (fp == NULL){
+        puts("arquivo nao encontrado");
+        exit(1);
+    }
     
     int qLines = 0;
     int size;
