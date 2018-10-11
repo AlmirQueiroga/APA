@@ -134,7 +134,7 @@ int main(){
         qLines++;
     }
     fclose(fp);//fim da leitura
-    //erro de leitura
+    //erro de leitura//
     */
 
 
