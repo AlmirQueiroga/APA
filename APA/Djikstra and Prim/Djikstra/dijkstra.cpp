@@ -96,14 +96,10 @@ printresultado(init, anterior[], n){
 
 int main(){
 
+	/*
 	 //leitura do arquivo
     FILE *fp;
     fp = fopen("instancias/dij10.txt", "r");
-
-    if (fp == NULL){
-        puts("arquivo nao encontrado");
-        exit(1);
-    }
     
     int qLines = 0;
     int size;
@@ -138,6 +134,8 @@ int main(){
         qLines++;
     }
     fclose(fp);//fim da leitura
+    //erro de leitura
+    */
 
 
     Dijkstra(adj, size, 0);
