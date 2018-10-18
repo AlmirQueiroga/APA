@@ -1,105 +1,76 @@
 
 
 #include<stdio.h>
-#include<conio.h>
-#include<vector>
+#include <utility>
+#include <algorithm>
+#include <string.h>
+#include <fstream>
+#include <vector>
+#include <bits/stdc++.h> 
+#include <limits>
 
 
 
 using namespace std;
-const int MAX = 1000
-const int infinito = 9999
-
-	
-	/*C[][]
-	aresta[][]
-	visitados[]
-	distancia[]
-	*/
+const int MAX = 1000;
+const int infinito = 9999;
 
 
 
-void Dijkstra(std::vector<int , int> C, int n, int init){
 
- 	std::vector<int, int> AUX, anterior[n], visitado[n], distancia[MAX], novisit, prox, minim;
-
- 	// Faz a matriz de distancias
- 	for(i = 0; i < n; i++){
- 		for(int j = 0; j < n; j++){
- 			if(C[][] == 0){
- 				AUX[i][j] = infinito; //se os vertices não tem conexão então a distancia é infinita 
- 				}
- 			if(C[][] != 0){
- 				AUX[i][j] = C[i][j];
- 				}
- 			}
-
- 		}
-
- 	 for(int i=0; i<n; i++){
-        visitado[i]= 0; 
-        distancia[i] = AUX[init][i];
-        anterior[i] = init
-    	}
-    distancia[init] = 0;
-    visitado[init] = 1;
-    novisit = 1;
-
-     while(novisit < n-1)
-    {
-        minim =infinito;
-        
-        for(i=0; i<n; i++)
-            if(distancia[i]<minim && !visitado[i])
-            {
-                minim = distancia[i];
-                prox = i;
-            }
-                       
-            visitado[prox]= 1;
-            for(i=0; i < n; i++)
-                if(!visitado[i])
-                    if(minim + AUX[prox][i] < distancia[i])
-                    {
-                        distancia[i]=minim + AUX[prox][i];
-                        anterior[i] = prox;
-                    }
-        novisit++;
-    }
+void Dijkstra(std::vector<std::vector <int> > adj, int n, int init){
+    //n = numero de nós
+    //distancia = distancia vista do nó inicial
+    //init = no inicial
+	bool VisNod[n]; // quando true o no já esta no caminho minimo
+	int distancia[n];
+	int min = infinito; // <-- minimo dos nós ae 
+	//int key = init; // no que vai visitar
+	int min_index;
+	int i, j, k;
 
 
-    printresultado(init, anterior[], n);
-
-}
-
-
-printresultado(init, anterior[], n){
-
-	for(int i = 0; i < n; i++){
-		if(i != init){
-			printf("\np/no =%d", i);
-            
-            int j = i;
-            do{
-                j = anterior[j];
-
-                printf("<-%d", j);
-
-            }while(j != init);
-            	continue;
+	for(i = 0; i < n ; i++){
+		distancia[i] = infinito;
+		VisNod[i] = false;
 		}
-	}
+	distancia[init] = 0;
+	VisNod[init] =true;
 
+	for(i = 0; i < n -1; i++){
+   			for (j = 0; j < n; j++) {
+     			if (VisNod[j] == false && distancia[j] <= min){
+         			min = distancia[j];
+         			min_index = j; 
+     				}
+   				}	
 
+   		VisNod[min_index] = true;
+   			for(k = 0; k < n; k++){
+   				if(!VisNod[k] && adj[min_index][k] && distancia[min_index] != infinito && distancia[min_index]+adj[min_index][k] < distancia[k]){
+
+   					distancia[k] = distancia[min_index] + adj[min_index][k]; 
+   					}
+   			}
+
+		}
+	
+		for (i = 0; i < n; i++) 
+      	printf("%d ---> %d\n", i, distancia[i]); 
+ 	
 }
 
 
 int main(){
 
-	/*
 	 //leitura do arquivo
     FILE *fp;
     fp = fopen("instancias/dij10.txt", "r");
+
+    if (fp == NULL){
+        puts("arquivo nao encontrado");
+        exit(1);
+    }
     
     int qLines = 0;
     int size;
@@ -113,7 +84,7 @@ int main(){
 
     int a[size][size] = {0};
 
-	std::vector<int, int> adj[size][size];
+	std::vector<std::vector<int> > adj(size, vector<int>(size));
     std::vector<int> v[size];
 
     while(1){
@@ -126,16 +97,14 @@ int main(){
         while(token!=NULL){
         	int index = ++i;
             a[qLines][index] = atoi(token);
-            adj[qLines].push_back(index, a[qLines][index]); 
-			adj[index].push_back(qLines, a[qLines][index]); 
+            //adj[qLines].push_back(index, a[qLines][index]); 
+			adj[index][qLines] = a[qLines][index]; 
             
             token = strtok(NULL, "\t");
         }
         qLines++;
     }
     fclose(fp);//fim da leitura
-    //erro de leitura//
-    */
 
 
     Dijkstra(adj, size, 0);
