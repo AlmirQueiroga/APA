@@ -7,7 +7,6 @@
 
 using namespace std;
 
-int max(int a, int b) { return (a > b)? a : b; } 
   
 int knapSack( int n, int W, int wt[], int val[]) 
 { 
@@ -18,7 +17,7 @@ int knapSack( int n, int W, int wt[], int val[])
    if (wt[n-1] > W) 
        return knapSack(n-1, W, wt, val); 
   
-   else return max( val[n-1] + knapSack( n-1, W-wt[n-1], wt, val), knapSack(n-1, W, wt, val) ); 
+   else return  (val[n-1] + knapSack( n-1, W-wt[n-1], wt, val) > knapSack(n-1, W, wt, val))? val[n-1] + knapSack( n-1, W-wt[n-1], wt, val) : knapSack(n-1, W, wt, val); 
 } 
 
 
