@@ -40,17 +40,31 @@ int main(int argc, char** argv) {
 			best = tsp.path_vals[t][1];
 		}
 	} */
+
+	clock_t tStart = clock();
+	vector<int> CaminhoAt = tsp.VND(tsp.circuit, tsp_size);
+	int newlength;
+	tsp.make_hamiltonian(CaminhoAt, newlength);
+	printf("%d\n", newlength);
+	printf("Time taken: %.4fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
+
+	clock_t tStart2 = clock();
 	int bestIndex = tsp.GRASP(tsp_size);
+	tsp.CalcPath(bestIndex, tsp.circuit, tsp.pathLength);
+	printf("%d\n", tsp.pathLength);
+	printf("Time taken: %.2fs\n", (double)(clock() - tStart2)/CLOCKS_PER_SEC);
 
 	//cria o caminho com o melhor ciclo
-	tsp.euler_tour(bestIndex,tsp.circuit);
-	tsp.make_hamiltonian(tsp.circuit,tsp.pathLength);
+	//tsp.euler_tour(20 ,tsp.circuit);
+	//tsp.make_hamiltonian(tsp.circuit,tsp.pathLength);
+
+	//printf("TESTEEEEEEEEEEEEE %d\n", tsp.pathLength);
 
 
 	// Print
 	//tsp.printPath();
 	//tsp.printResult();
 
-	tsp.swapVizinhanca(tsp.circuit, tsp. nCircuit, tsp.nLength);
+	//tsp.swapVizinhanca(tsp.tempList, tsp. nCircuit, tsp.nLength);
 
 }
