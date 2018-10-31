@@ -301,6 +301,8 @@ int TSP::findBestPath(int start){
 	make_hamiltonian(path, length);
 
 	return length;
+
+	
 }
 
 
@@ -323,6 +325,9 @@ void TSP::printPath(){
   cout << *(circuit.end()-1) << " to " << circuit.front();
   cout << "\nLength: " << pathLength << endl << endl;
 };
+
+
+
 
 void TSP::swapVizinhanca(vector<int> &path, vector<int> &npath, int nLength){
 	//Create copy of adj. list
@@ -350,6 +355,8 @@ void TSP::swapVizinhanca(vector<int> &path, vector<int> &npath, int nLength){
 			index = i;
 		}
 	}
+
+
 
 /*
   cout << endl;
@@ -391,7 +398,7 @@ void TSP::swapVizinhanca(vector<int> &path, vector<int> &npath, int nLength){
 	}
 	nLength += graph[*cur][*iter];
 
-	  cout << endl;
+/*	  cout << endl;
   for (vector<int>::iterator aux = npath.begin(); aux != npath.end()-1; ++aux) {
     cout << *aux << " to " << *(aux+1) << endl;
     //cout << graph[*aux][*(aux+1)] << endl;
@@ -404,9 +411,39 @@ void TSP::swapVizinhanca(vector<int> &path, vector<int> &npath, int nLength){
 
 	cout << "\nnovo nó:" << n1 << endl;
 
-	cout << "\nnovo comprimento:" << nLength << endl;
+	cout << "\nnovo comprimento:" << nLength << endl;*/
 
 };
+
+
+vector<int> TSP::VND(vector <int> &caminho, int size){
+
+	int x = 0;
+	int length = 0;
+	int nlength = 0;
+	int n1 = rand() % size;
+	euler_tour(n1, caminho);
+    vector<int> caminhoaux = caminho;
+    while(x < 2){
+        if(!x)
+            swapVizinhanca(caminho, caminhoaux, length);
+        	make_hamiltonian(caminho, length);
+
+        if(x)
+            swapVizinhanca(caminhoaux, caminho, nlength);
+        	make_hamiltonian(caminhoaux, nlength);
+
+        if(nlength < length){
+            caminho = caminhoaux;
+            x = 0;
+        }
+        else
+            x++;
+    }
+    return caminho;
+};
+
+
 
 int TSP::Construcao(int size){
  int best = std::numeric_limits<int>::max();
@@ -476,4 +513,10 @@ FinalIndex = GlobalIndex;
 
 return FinalIndex;
 
+};
+
+void TSP::CalcPath(int start, vector<int> &path, int &pathCost){
+
+	euler_tour(start, path);
+	make_hamiltonian(path, pathCost);
 }
