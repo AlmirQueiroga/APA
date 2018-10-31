@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <vector>
 #include <limits>
+#include <time.h>
 
 using namespace std;
 
@@ -60,6 +61,8 @@ public:
 
 	vector<City> cities;
 
+	vector<int> tempList;
+
 	int **graph;
 
   vector<int>* adjlist;
@@ -100,11 +103,15 @@ public:
 
 	void swapVizinhanca(vector<int> &path, vector<int> &npath, int nLength);
 
+	vector<int> VND(vector <int> &caminho, int size);
+
 	int Construcao(int tsp);
 
 	//int SimulatedAnnealing(vector <int> &path, vector <int> &fpath, int Length, int fLength);
 
 	int GRASP(int size);
+
+	void CalcPath(int start, vector<int> &path, int &pathCost);
 
 };
 
