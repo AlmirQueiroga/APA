@@ -3,7 +3,7 @@
 
 //Construtor
 TSP::TSP(string in, string out){
-	iFile = in;
+	/*iFile = in;
 	oFile = out;
 
 	ifstream inStream;
@@ -76,7 +76,7 @@ void TSP::fillMatrix(){
 		}
 	}
 }
-
+*/ // alterar --- leitura em coordenada
 
 // findMST vai encontrar uma árvore minima usando algoritmo de prim
 
