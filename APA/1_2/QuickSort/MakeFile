@@ -1,0 +1,7 @@
+CC = g++
+
+all:
+	$(CC) quick.cpp -o quick
+
+clean:
+	rm quick
