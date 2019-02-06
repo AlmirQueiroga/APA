@@ -1,7 +1,7 @@
 CC = g++
 
 all:
-	$(CC) MergeSort.cpp -o MergeSort
+	$(CC) merge.cpp -o merge
 
 clean:
-	rm MergeSort
+	rm merge
