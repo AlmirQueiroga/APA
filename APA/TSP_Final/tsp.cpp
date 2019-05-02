@@ -242,15 +242,6 @@ z
 
         int index = 0;
 
-        token = strtok(line, "A");
-        while(token!=NULL){
-            p[qLines].push_back(make_pair(atoi(token), index));
-            token = strtok(NULL, " ");
-            index++;
-        }
-        qLines++;
-
-
         index = 0;
 
         token = strtok(line, " ");
