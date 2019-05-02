@@ -216,7 +216,7 @@ int main(){
    // instancia = "instancias/instancias_teste" + instancia + ".txt";
     //leitura do arquivo
     FILE *fp;
-    fp = fopen("instancias/instancias_teste/bayg29.txt", "r");
+    fp = fopen("instancias/instancias_tsp_cup/tsp1.txt", "r");
 
     if (fp == NULL){
         puts("arquivo nao encontrado");
@@ -228,7 +228,7 @@ int main(){
     int size;
     char line[99999];
     char *token;
-z
+
     size = atoi(line);
 
     std::vector<pair<int, int>> p[size];
