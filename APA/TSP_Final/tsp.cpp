@@ -12,8 +12,6 @@
 
 using namespace std;
 
-
-
 //Calcula o valor do caminho presente no ciclo presente em resultados
 int calcularValorCaminho(std::vector<pair<int, int>> p[], vector<int> caminho, int size){
     int soma = 0;
@@ -133,7 +131,7 @@ int estaContido(int a, vector<int> &caminho){
 }
 
 //Metodo do vizinho mais proximo
-void construir(std::vector<pair<int, int>> p[], std::vector<pair<int, int>> p_cont[], int size, vector<int> &caminho){
+void construir(std::vector<pair<int, int>> p[], int size, vector<int> &caminho, int alfa){
     caminho.clear();
     std::vector<pair<int, int>>* paux = p;
 
@@ -148,7 +146,7 @@ void construir(std::vector<pair<int, int>> p[], std::vector<pair<int, int>> p_co
         sort(paux[vertice].begin(), paux[vertice].begin() + size);
 
         for(int i = 0; i < paux[vertice].size(); i++){
-            if(p[vertice][i].first != 0 && !estaContido(p[vertice][i].second, caminho)){
+            if(p[vertice][i].first != 0 && !estaContido(p[vertice][i].second, caminho) && LCR.size() < (alfa * size)+1){
                 LCR.push_back(p[vertice][i].second);
             }
         }
@@ -160,20 +158,9 @@ void construir(std::vector<pair<int, int>> p[], std::vector<pair<int, int>> p_co
         if(caminho.size() == size)
             break;
     }
-
-    //cout << "até aqui td bem" << endl;
-
-
-    cout << calcularValorCaminho(p_cont, caminho, size) << endl;
-
-    for(int i = 0; i < caminho.size(); i++)
-        cout << caminho[i] << " ";
-    cout << endl;
-
-    cout << "Custo Final: " << calcularValorCaminho(paux, vnd(p_cont, caminho, size), size) << endl;
 }
 
-/*void GRASP(vector<pair<int, int>> p[], vector<pair<int, int>> paux[], int size, vector<int> &caminho, int GraspMax, int alfa){
+void GRASP(vector<pair<int, int>> p[], vector<pair<int, int>> paux[], int size, vector<int> &caminho, int GraspMax, int alfa){
     construir(p, size, caminho, alfa);
     vector<int> caminhomenor = caminho;
     int f = calcularValorCaminho(paux, caminho, size);
@@ -197,26 +184,20 @@ void construir(std::vector<pair<int, int>> p[], std::vector<pair<int, int>> p_co
     cout << endl;
     cout << "---------------------------------------\nCusto final:" << endl;
     cout << calcularValorCaminho(paux, caminho, size) << endl;
-}*/
+}
 
-//leitura do arquivo e chamada de funçoes
 int main(){
-    //string instancia;
-    //float alfa;
-    //int GraspMax;
+    float alfa;
+    int GraspMax;
 
-    /*cout << "digite o nome da instancia" << endl;
-    cin >> instancia;
-    instancia = "instancias/" + instancia + ".txt";*/
-   /* cout << "digite o alfa" << endl;
-    cin >> alfa;
+    cout << "digite o alfa" << endl;
+    cin >> alfa; // de preferência mesmo número de iterações
     cout << "digite o numero de iteracoes" << endl;
-    cin >> GraspMax;*/
+    cin >> GraspMax;
 
-   // instancia = "instancias/instancias_teste" + instancia + ".txt";
     //leitura do arquivo
     FILE *fp;
-    fp = fopen("instancias/instancias_tsp_cup/tsp1.txt", "r");
+    fp = fopen("instancias/instancias_teste/bayg29.txt", "r");
 
     if (fp == NULL){
         puts("arquivo nao encontrado");
@@ -224,65 +205,45 @@ int main(){
     }
 
     int qLines = 0;
-    int aux = 0;
     int size;
-    char line[99999];
+    int tamanho;
+    char line[999];
     char *token;
+
+    fgets(line, 999,fp);
 
     size = atoi(line);
 
     std::vector<pair<int, int>> p[size];
 
-    fgets(line, 99999, fp);
+    cout << "teste" << endl;
 
     while(1){
         int  i = qLines;
-        fgets(line, 99999, fp);
+        fgets(line, 999, fp);
 
+        if (feof(fp))
+            break;
 
         int index = 0;
-
-        index = 0;
 
         token = strtok(line, " ");
         while(token!=NULL){
             p[qLines].push_back(make_pair(atoi(token), index));
             token = strtok(NULL, " ");
             index++;
+
         }
         qLines++;
-
-/*
-        cout << p[0][0].first << endl;
-        cout << p[0][1].first << endl;
-        cout << p[0][2].first << endl;
-        cout << p[0][3].first << endl;
-        cout << p[0][4].first << endl;
-        cout << p[0][5].first << endl;
-        cout << p[0][6].first << endl;
-        cout << p[0][7].first << endl;
-        cout << p[0][8].first << endl;
-        cout << p[0][9].first << endl;
-        cout << p[0][10].first << endl;
-        cout << p[0][11].first << endl;
-*/
-
-         if (feof(fp))
-            break;
+        // cout << "teste2" << endl;
     }
 
     fclose(fp);//fim da leitura
 
-    std::vector<pair<int, int>> p_cont[size] = p;
+    std::vector<pair<int, int>> paux[size] = p;
     vector<int> caminho;
 
-    cout << "teste" << endl;
-
-    construir(p, p_cont, size, caminho);
-
-
-
-    //GRASP(p, paux, size, caminho, GraspMax, alfa);
+    GRASP(p, paux, size, caminho, GraspMax, alfa);
 
     return 0;
 }
