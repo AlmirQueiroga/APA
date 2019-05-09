@@ -186,18 +186,36 @@ void GRASP(vector<pair<int, int>> p[], vector<pair<int, int>> paux[], int size, 
     cout << calcularValorCaminho(paux, caminho, size) << endl;
 }
 
+int DistanciaEuclidiana(float x1, float x2, float y1, float y2){
+    float d = ((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1));
+    return round(sqrt(d));
+}
+
 int main(){
+
+    int escolha;
     float alfa;
     int GraspMax;
 
-    cout << "digite o alfa" << endl;
+    cout << "Escolha o tipo de leitura:" << endl;
+    cout << "1 - TSP teste \n 2 - TSP Cup" << endl;
+    cin >> escolha;
+
+
+        cout << "digite o alfa" << endl;
     cin >> alfa; // de preferência mesmo número de iterações
     cout << "digite o numero de iteracoes" << endl;
     cin >> GraspMax;
 
     //leitura do arquivo
     FILE *fp;
+
+    if(escolha == 1){
     fp = fopen("instancias/instancias_teste/bayg29.txt", "r");
+       }
+    if(escolha == 2){
+    fp = fopen("instancias/instancias_tsp_cup/tsp1.txt", "r");
+    }
 
     if (fp == NULL){
         puts("arquivo nao encontrado");
@@ -209,17 +227,23 @@ int main(){
     int tamanho;
     char line[999];
     char *token;
+    char *tokenS;
 
     fgets(line, 999,fp);
+
+    tokenS = strtok(line, " ");
+    tamanho = atoi(tokenS);
+
+    int X[tamanho];
+    int Y[tamanho];
 
     size = atoi(line);
 
     std::vector<pair<int, int>> p[size];
 
-    cout << "teste" << endl;
 
     while(1){
-        int  i = qLines;
+
         fgets(line, 999, fp);
 
         if (feof(fp))
@@ -229,21 +253,68 @@ int main(){
 
         token = strtok(line, " ");
         while(token!=NULL){
-            p[qLines].push_back(make_pair(atoi(token), index));
+           
+          // cout << "teste" << endl;
+           p[qLines].push_back(make_pair(atoi(token), index));
             token = strtok(NULL, " ");
             index++;
-
         }
         qLines++;
         // cout << "teste2" << endl;
     }
 
+
     fclose(fp);//fim da leitura
 
-    std::vector<pair<int, int>> paux[size] = p;
+/*
+    std::vector<pair<int, int>> pCUP[size];
+
+    if(escolha == 2){
+
+    for (int n = 0; n < tamanho; n++){
+            X[n] = p[n][1].first;
+    }
+    
+     for (int n = 0; n < tamanho; n++){
+            Y[n] = p[n][2].first;
+    }
+
+    int init = 0;
+    for (int i = 0; i < tamanho - 1 ; i++) {
+        for (int j = init; j < tamanho ; j++){
+            if (i == j){
+                pCUP[i][j].first = pCUP[j][j].first = 0;
+                continue;
+            }
+             pCUP[p[0][init].second].push_back(make_pair(DistanciaEuclidiana(X[i], X[j], Y[i], Y[j]), p[0][init].second)); 
+        }
+        init++;
+        }
+
+   }
+
+   std::vector<pair <int, int>> pCUPaux[size] = pCUP;*/
+    std::vector<pair <int, int>> paux[size] = p;
     vector<int> caminho;
 
-    GRASP(p, paux, size, caminho, GraspMax, alfa);
+
+
+/*
+    for(int n = 0; n < tamanho; n++){
+        for(int m = 0; m < tamanho; m++){
+
+            float d = ((X[m] - X[n])*(X[m] - X[n]) + (Y[m] - Y[n])*(Y[m] - Y[n]));
+
+                paux.[].push_back(make_pair(round(sqrt(d)), p[0][m].second))
+
+        }
+    }
+*/
+
+
+   GRASP(p, paux, size, caminho, GraspMax, alfa);
+
+    
 
     return 0;
 }
