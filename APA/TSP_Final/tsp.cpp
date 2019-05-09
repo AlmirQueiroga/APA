@@ -227,15 +227,15 @@ int main(){
     int tamanho;
     char line[999];
     char *token;
-    char *tokenS;
+    //char *tokenS;
 
     fgets(line, 999,fp);
 
-    tokenS = strtok(line, " ");
-    tamanho = atoi(tokenS);
+    //tokenS = strtok(line, " ");
+   // tamanho = atoi(tokenS);
 
-    int X[tamanho];
-    int Y[tamanho];
+    //int X[tamanho];
+    //int Y[tamanho];
 
     size = atoi(line);
 
