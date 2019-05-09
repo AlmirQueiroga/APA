@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <time.h>
 
 using namespace std;
 
@@ -146,7 +147,7 @@ void construir(std::vector<pair<int, int>> p[], int size, vector<int> &caminho, 
         sort(paux[vertice].begin(), paux[vertice].begin() + size);
 
         for(int i = 0; i < paux[vertice].size(); i++){
-            if(p[vertice][i].first != 0 && !estaContido(p[vertice][i].second, caminho) && LCR.size() < (alfa * size)+1){
+            if(p[vertice][i].first != 0 && !estaContido(p[vertice][i].second, caminho) && LCR.size() < (alfa * size)){
                 LCR.push_back(p[vertice][i].second);
             }
         }
@@ -161,6 +162,9 @@ void construir(std::vector<pair<int, int>> p[], int size, vector<int> &caminho, 
 }
 
 void GRASP(vector<pair<int, int>> p[], vector<pair<int, int>> paux[], int size, vector<int> &caminho, int GraspMax, int alfa){
+    clock_t c2, c1;
+    float tempo;
+    c1= clock();
     construir(p, size, caminho, alfa);
     vector<int> caminhomenor = caminho;
     int f = calcularValorCaminho(paux, caminho, size);
@@ -175,15 +179,20 @@ void GRASP(vector<pair<int, int>> p[], vector<pair<int, int>> paux[], int size, 
             f = calcularValorCaminho(paux, caminho, size);
         }
     }
+   
 
     caminho = caminhomenor;
-    cout << "---------------------------------------\nCaminho final:" << endl;
+     c2 = clock();
+     tempo = (c2- c1)*1000/CLOCKS_PER_SEC;
+
+    cout << "\nCaminho final:" << endl;
     for(int j = 0; j < caminho.size(); j++){
         cout << caminho[j] << " ";
     }
     cout << endl;
-    cout << "---------------------------------------\nCusto final:" << endl;
+    cout << "\nCusto final:" << endl;
     cout << calcularValorCaminho(paux, caminho, size) << endl;
+    cout << "tempo =" << tempo << "ms" << endl;
 }
 
 int DistanciaEuclidiana(float x1, float x2, float y1, float y2){
@@ -197,9 +206,9 @@ int main(){
     float alfa;
     int GraspMax;
 
-    cout << "Escolha o tipo de leitura:" << endl;
-    cout << "1 - TSP teste \n 2 - TSP Cup" << endl;
-    cin >> escolha;
+    //cout << "Escolha o tipo de leitura:" << endl;
+    //cout << "1 - TSP teste \n 2 - TSP Cup" << endl;
+    //cin >> escolha;
 
 
         cout << "digite o alfa" << endl;
@@ -210,12 +219,12 @@ int main(){
     //leitura do arquivo
     FILE *fp;
 
-    if(escolha == 1){
+    //if(escolha == 1){
     fp = fopen("instancias/instancias_teste/bayg29.txt", "r");
-       }
-    if(escolha == 2){
-    fp = fopen("instancias/instancias_tsp_cup/tsp1.txt", "r");
-    }
+      // }
+    //if(escolha == 2){
+    //fp = fopen("instancias/instancias_tsp_cup/tsp1.txt", "r");
+    //}
 
     if (fp == NULL){
         puts("arquivo nao encontrado");
@@ -225,17 +234,17 @@ int main(){
     int qLines = 0;
     int size;
     int tamanho;
-    char line[999];
+    char line[99999];
     char *token;
-    //char *tokenS;
+    char *tokenS;
 
-    fgets(line, 999,fp);
+    fgets(line, 99999,fp);
 
-    //tokenS = strtok(line, " ");
-   // tamanho = atoi(tokenS);
+    tokenS = strtok(line, " ");
+    tamanho = atoi(tokenS);
 
-    //int X[tamanho];
-    //int Y[tamanho];
+    int X[tamanho];
+    int Y[tamanho];
 
     size = atoi(line);
 
@@ -244,7 +253,7 @@ int main(){
 
     while(1){
 
-        fgets(line, 999, fp);
+        fgets(line, 99999, fp);
 
         if (feof(fp))
             break;
